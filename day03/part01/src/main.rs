@@ -3,19 +3,17 @@ const PUZZLE_INPUT: &str = include_str!("../../input");
 
 type Point = (usize,usize);
 
-fn parse_claim(claim: &str) -> Vec<usize> {
-    claim.split(|c: char| !c.is_digit(10))
+fn parse_claim(claim: &str) -> (usize,usize,usize,usize) {
+    let claim: Vec<usize> = claim.split(|c: char| !c.is_digit(10))
         .filter(|s| !s.is_empty())
         .skip(1)
         .map(|num| num.parse::<usize>().unwrap())
-        .collect()
+        .collect();
+    (claim[0],claim[1],claim[2],claim[3])
 }
 
-fn expand_claim(claim: Vec<usize>) -> Vec<Point> {
-    let x_start = claim[0];
-    let y_start = claim[1];
-    let x_dim   = claim[2];
-    let y_dim   = claim[3];
+fn expand_claim(claim: (usize,usize,usize,usize)) -> Vec<Point> {
+    let (x_start,y_start,x_dim,y_dim) = claim;
     let mut squares = Vec::with_capacity(x_dim * y_dim);
     for x in x_start..x_start + x_dim {
         for y in y_start..y_start+y_dim {
