@@ -2,6 +2,7 @@ const PUZZLE_INPUT: &str = include_str!("../../input");
 
 type Claim = (usize,usize,usize,usize);
 
+// Example: "#206 @ 163,522: 17x11" -> (163, 522, 17, 11)
 fn parse_claim(claim: &str) -> Claim {
     let claim: Vec<usize> = claim
         .split(|c: char| !c.is_digit(10))
@@ -12,6 +13,7 @@ fn parse_claim(claim: &str) -> Claim {
     (claim[0],claim[1],claim[2],claim[3])
 }
 
+// Note: a claim does not overlap itself.
 fn do_not_overlap<'a>(claim1: &'a Claim) -> impl Fn(&'a Claim) -> bool {
     move |claim2| {
         let &(x1_start, y1_start, x1_dim, y1_dim) = claim1;
@@ -29,7 +31,6 @@ fn main() {
         .lines()
         .map(parse_claim)
         .collect();
-    
     for claim in &claims {
         if claims.iter().all(do_not_overlap(claim)) {
             println!("{:?}", claim);
