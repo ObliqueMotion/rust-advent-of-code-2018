@@ -3,7 +3,8 @@ const PUZZLE_INPUT: &str = include_str!("../../input");
 type Claim = (usize,usize,usize,usize);
 
 fn parse_claim(claim: &str) -> Claim {
-    let claim: Vec<usize> = claim.split(|c: char| !c.is_digit(10))
+    let claim: Vec<usize> = claim
+        .split(|c: char| !c.is_digit(10))
         .filter(|s| !s.is_empty())
         .skip(1)
         .map(|num| num.parse::<usize>().unwrap())
