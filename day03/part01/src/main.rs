@@ -3,6 +3,7 @@ const PUZZLE_INPUT: &str = include_str!("../../input");
 
 type Point = (usize,usize);
 
+// Example: "#206 @ 163,522: 17x11" -> (163, 522, 17, 11)
 fn parse_claim(claim: &str) -> (usize,usize,usize,usize) {
     let claim: Vec<usize> = claim
         .split(|c: char| !c.is_digit(10))
@@ -13,6 +14,7 @@ fn parse_claim(claim: &str) -> (usize,usize,usize,usize) {
     (claim[0],claim[1],claim[2],claim[3])
 }
 
+// Example: (5, 7, 2, 2) -> [(5,7), (5,8), (6,7), (6,8)]
 fn expand_claim(claim: (usize,usize,usize,usize)) -> Vec<Point> {
     let (x_start,y_start,x_dim,y_dim) = claim;
     let mut squares = Vec::with_capacity(x_dim * y_dim);
