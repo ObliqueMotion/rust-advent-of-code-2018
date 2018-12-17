@@ -11,7 +11,7 @@ fn parse_claim(claim: &str) -> Vec<usize> {
         .collect()
 }
 
-fn squares(claim: Vec<usize>) -> Vec<Point> {
+fn expand_claim(claim: Vec<usize>) -> Vec<Point> {
     let x_start = claim[0];
     let y_start = claim[1];
     let x_dim   = claim[2];
@@ -26,10 +26,10 @@ fn squares(claim: Vec<usize>) -> Vec<Point> {
 }
 
 fn main() {
-    let squares = PUZZLE_INPUT
+    let overlap_count = PUZZLE_INPUT
         .lines()
         .map(parse_claim)
-        .map(squares)
+        .map(expand_claim)
         .fold(HashMap::new(), |mut claims, claim| {
             for square in claim {
                 claims.entry(square)
@@ -37,6 +37,9 @@ fn main() {
                     .or_insert(1);
             }
             claims
-        });
-    println!("{}", squares.iter().filter(|&(_,&count)| count > 1).count());
+        })
+        .iter()
+        .filter(|&(_,&count)| count > 1)
+        .count();
+    println!("{}", overlap_count);
 }
